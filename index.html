@@ -1,1 +1,147 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EventPulse Prototype</title><link rel="stylesheet" href="./styles.css"></head><body><main><section class="hero"><p>Prototype 2 • Business / social</p><h1>EventPulse</h1><span>Event pages, RSVPs, ticket links, vendors, guest lists, and share-ready flyers.</span><button id="rsvp">Create RSVP Page</button></section><section class="event"><div><b>Pop-Up Market</b><span>128 RSVPs</span></div><div><b>Family Reunion</b><span>54 guests</span></div><div><b>Conference Mixer</b><span>$2,840 tickets</span></div></section></main><script src="./app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EventPulse</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="backdrop"></div>
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Production Wave 1</p>
+          <h1>EventPulse</h1>
+          <p class="lede">
+            EventPulse is now focused on live event operations: launch event pages,
+            track RSVP demand, monitor vendor commitments, and clear production tasks
+            before show day.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <button class="primary" data-tab-target="events">Launch Event</button>
+          <button class="secondary" data-tab-target="guests">Log RSVP</button>
+        </div>
+      </section>
+
+      <section class="stats" id="stats"></section>
+
+      <section class="workspace">
+        <aside class="rail">
+          <button class="rail-tab active" data-tab="events">Events</button>
+          <button class="rail-tab" data-tab="guests">Guests</button>
+          <button class="rail-tab" data-tab="vendors">Vendors</button>
+          <button class="rail-tab" data-tab="checklist">Checklist</button>
+        </aside>
+
+        <div class="content">
+          <section class="panel active" data-panel="events">
+            <div class="panel-header">
+              <div>
+                <h2>Event Ops Board</h2>
+                <p>Manage launch dates, ticket goals, venues, and readiness notes.</p>
+              </div>
+            </div>
+            <form id="eventForm" class="form-card">
+              <div class="field-grid three">
+                <label><span>Name</span><input name="name" required placeholder="Sunset Creative Summit" /></label>
+                <label><span>Type</span><input name="kind" required placeholder="Conference / Pop-up / Reunion" /></label>
+                <label><span>Date</span><input name="eventDate" type="date" required /></label>
+              </div>
+              <div class="field-grid three">
+                <label><span>Venue</span><input name="venue" required placeholder="Waterfront Hall" /></label>
+                <label><span>Status</span><select name="status"><option>Planning</option><option>On Sale</option><option>Locked</option></select></label>
+                <label><span>Ticket Goal</span><input name="ticketGoal" type="number" min="0" value="150" /></label>
+              </div>
+              <div class="field-grid two">
+                <label><span>Ticket Price</span><input name="ticketPrice" type="number" min="0" step="0.01" value="25" /></label>
+                <label><span>Run Note</span><input name="notes" placeholder="Sponsor reveal, AV load-in, press timing" /></label>
+              </div>
+              <button type="submit" class="primary">Create Event</button>
+            </form>
+            <div id="eventList" class="list-grid"></div>
+          </section>
+
+          <section class="panel" data-panel="guests">
+            <div class="panel-header">
+              <div>
+                <h2>RSVP Command</h2>
+                <p>Capture party size, response state, and special handling notes.</p>
+              </div>
+            </div>
+            <form id="guestForm" class="form-card">
+              <div class="field-grid three">
+                <label><span>Event</span><select name="eventId" id="guestEventId"></select></label>
+                <label><span>Guest Name</span><input name="name" required placeholder="Jordan Smith" /></label>
+                <label><span>Email</span><input name="email" type="email" placeholder="jordan@example.com" /></label>
+              </div>
+              <div class="field-grid three">
+                <label><span>RSVP</span><select name="rsvp"><option>Going</option><option>Maybe</option><option>Invited</option></select></label>
+                <label><span>Party Size</span><input name="partySize" type="number" min="1" value="1" /></label>
+                <label><span>Note</span><input name="notes" placeholder="VIP, dietary, accessibility" /></label>
+              </div>
+              <button type="submit" class="primary">Add RSVP</button>
+            </form>
+            <div id="guestList" class="list-grid"></div>
+          </section>
+
+          <section class="panel" data-panel="vendors">
+            <div class="panel-header">
+              <div>
+                <h2>Vendor Pipeline</h2>
+                <p>Track booked partners, quoted services, and operating budgets.</p>
+              </div>
+            </div>
+            <form id="vendorForm" class="form-card">
+              <div class="field-grid three">
+                <label><span>Event</span><select name="eventId" id="vendorEventId"></select></label>
+                <label><span>Vendor</span><input name="name" required placeholder="North Sound Crew" /></label>
+                <label><span>Service</span><input name="service" required placeholder="AV, catering, decor, security" /></label>
+              </div>
+              <div class="field-grid three">
+                <label><span>Contact</span><input name="contact" placeholder="ops@vendor.com" /></label>
+                <label><span>Status</span><select name="status"><option>Quoted</option><option>Booked</option><option>Needs Follow-up</option></select></label>
+                <label><span>Budget</span><input name="budget" type="number" min="0" step="0.01" value="0" /></label>
+              </div>
+              <button type="submit" class="primary">Add Vendor</button>
+            </form>
+            <div id="vendorList" class="list-grid"></div>
+          </section>
+
+          <section class="panel" data-panel="checklist">
+            <div class="panel-header">
+              <div>
+                <h2>Show-Day Checklist</h2>
+                <p>Keep every event deliverable tied to an owner and due date.</p>
+              </div>
+            </div>
+            <form id="taskForm" class="form-card">
+              <div class="field-grid three">
+                <label><span>Event</span><select name="eventId" id="taskEventId"></select></label>
+                <label><span>Task</span><input name="title" required placeholder="Confirm sponsor slides" /></label>
+                <label><span>Owner</span><input name="owner" placeholder="Ops / Marketing / Producer" /></label>
+              </div>
+              <div class="field-grid two">
+                <label><span>Due Date</span><input name="dueDate" type="date" /></label>
+                <label><span>Status</span><select name="status"><option>Open</option><option>In Progress</option><option>Done</option></select></label>
+              </div>
+              <button type="submit" class="primary">Add Task</button>
+            </form>
+            <div id="taskList" class="list-grid"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <template id="cardTemplate">
+      <article class="record-card"></article>
+    </template>
+
+    <div id="toast" class="toast" aria-live="polite"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>

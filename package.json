@@ -1,0 +1,12 @@
+{
+  "name": "eventpulse",
+  "version": "1.0.0",
+  "private": true,
+  "description": "EventPulse production MVP",
+  "scripts": {
+    "check": "node --check app.js && node --check api/bootstrap.js && node --check api/events.js && node --check api/guests.js && node --check api/vendors.js && node --check api/checklist.js"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.4"
+  }
+}
