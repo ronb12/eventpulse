@@ -197,6 +197,95 @@ button:hover {
   min-width: 0;
 }
 
+.overview-grid,
+.overview-columns {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.overview-grid {
+  grid-template-columns: 1.3fr 1fr 1fr;
+}
+
+.overview-columns {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.spotlight-card,
+.overview-card,
+.overview-column,
+.timeline-card {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.spotlight-card,
+.overview-card,
+.overview-column {
+  border-radius: 22px;
+  padding: 20px;
+}
+
+.section-kicker {
+  display: inline-block;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 11px;
+  color: var(--brand);
+}
+
+.spotlight-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.spotlight-stats span,
+.mini-metric span,
+.column-head p,
+.timeline-card p {
+  color: var(--muted);
+}
+
+.spotlight-stats strong,
+.mini-metric strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 1.08rem;
+}
+
+.mini-metric {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.column-head {
+  margin-bottom: 14px;
+}
+
+.timeline-list {
+  display: grid;
+  gap: 12px;
+}
+
+.timeline-card {
+  border-radius: 18px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+}
+
+.timeline-card h4 {
+  margin: 0 0 6px;
+}
+
 .panel {
   display: none;
 }
@@ -350,6 +439,11 @@ select {
 
   .rail {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .overview-grid,
+  .overview-columns {
+    grid-template-columns: 1fr;
   }
 }
 

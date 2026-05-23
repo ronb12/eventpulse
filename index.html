@@ -14,7 +14,7 @@
     <main class="shell">
       <section class="hero">
         <div>
-          <p class="eyebrow">Production Wave 1</p>
+          <p class="eyebrow">Frontend Differentiation Pass</p>
           <h1>EventPulse</h1>
           <p class="lede">
             EventPulse is now focused on live event operations: launch event pages,
@@ -23,8 +23,8 @@
           </p>
         </div>
         <div class="hero-actions">
-          <button class="primary" data-tab-target="events">Launch Event</button>
-          <button class="secondary" data-tab-target="guests">Log RSVP</button>
+          <button class="primary" data-tab-target="overview">View Command Center</button>
+          <button class="secondary" data-tab-target="events">Launch Event</button>
         </div>
       </section>
 
@@ -32,17 +32,57 @@
 
       <section class="workspace">
         <aside class="rail">
-          <button class="rail-tab active" data-tab="events">Events</button>
+          <button class="rail-tab active" data-tab="overview">Overview</button>
+          <button class="rail-tab" data-tab="events">Events</button>
           <button class="rail-tab" data-tab="guests">Guests</button>
           <button class="rail-tab" data-tab="vendors">Vendors</button>
-          <button class="rail-tab" data-tab="checklist">Checklist</button>
+          <button class="rail-tab" data-tab="checklist">Run of Show</button>
         </aside>
 
         <div class="content">
-          <section class="panel active" data-panel="events">
+          <section class="panel active" data-panel="overview">
             <div class="panel-header">
               <div>
-                <h2>Event Ops Board</h2>
+                <h2>Command Center</h2>
+                <p>One place to see launch pressure, guest momentum, vendor readiness, and show-day blockers.</p>
+              </div>
+            </div>
+            <div class="overview-grid">
+              <article class="spotlight-card">
+                <span class="section-kicker">Active Event</span>
+                <div id="activeEventSpotlight"></div>
+              </article>
+              <article class="overview-card">
+                <span class="section-kicker">Guest Momentum</span>
+                <div id="guestMomentum"></div>
+              </article>
+              <article class="overview-card">
+                <span class="section-kicker">Vendor Readiness</span>
+                <div id="vendorMomentum"></div>
+              </article>
+            </div>
+            <div class="overview-columns">
+              <article class="overview-column">
+                <div class="column-head">
+                  <h3>Upcoming Milestones</h3>
+                  <p>Workback items with the closest deadlines.</p>
+                </div>
+                <div id="milestoneList" class="timeline-list"></div>
+              </article>
+              <article class="overview-column">
+                <div class="column-head">
+                  <h3>Guest Watchlist</h3>
+                  <p>Recent RSVP and party-size movement.</p>
+                </div>
+                <div id="guestWatchList" class="timeline-list"></div>
+              </article>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="events">
+            <div class="panel-header">
+              <div>
+                <h2>Event Buildout</h2>
                 <p>Manage launch dates, ticket goals, venues, and readiness notes.</p>
               </div>
             </div>
@@ -115,7 +155,7 @@
           <section class="panel" data-panel="checklist">
             <div class="panel-header">
               <div>
-                <h2>Show-Day Checklist</h2>
+                <h2>Run of Show</h2>
                 <p>Keep every event deliverable tied to an owner and due date.</p>
               </div>
             </div>

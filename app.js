@@ -5,6 +5,11 @@ const state = {
 
 const elements = {
   stats: document.querySelector("#stats"),
+  activeEventSpotlight: document.querySelector("#activeEventSpotlight"),
+  guestMomentum: document.querySelector("#guestMomentum"),
+  vendorMomentum: document.querySelector("#vendorMomentum"),
+  milestoneList: document.querySelector("#milestoneList"),
+  guestWatchList: document.querySelector("#guestWatchList"),
   eventList: document.querySelector("#eventList"),
   guestList: document.querySelector("#guestList"),
   vendorList: document.querySelector("#vendorList"),
@@ -123,6 +128,59 @@ function renderEvents() {
   });
 }
 
+function renderOverview() {
+  const activeEvent = state.data.events.find((event) => event.id === state.data.activeEventId) || state.data.events[0];
+  if (!activeEvent) {
+    elements.activeEventSpotlight.innerHTML = `<div class="empty-state">Create an event to populate the command center.</div>`;
+    elements.guestMomentum.innerHTML = `<div class="empty-state">No guest activity yet.</div>`;
+    elements.vendorMomentum.innerHTML = `<div class="empty-state">No vendor activity yet.</div>`;
+    elements.milestoneList.innerHTML = `<div class="empty-state">No milestones yet.</div>`;
+    elements.guestWatchList.innerHTML = `<div class="empty-state">No guest watchlist yet.</div>`;
+    return;
+  }
+
+  const eventGuests = state.data.guests.filter((guest) => guest.event_id === activeEvent.id);
+  const eventVendors = state.data.vendors.filter((vendor) => vendor.event_id === activeEvent.id);
+  const eventTasks = state.data.checklist.filter((item) => item.event_id === activeEvent.id);
+  const committed = eventGuests.filter((guest) => guest.rsvp === "Going").reduce((sum, guest) => sum + Number(guest.party_size || 0), 0);
+
+  elements.activeEventSpotlight.innerHTML = `
+    <h3>${activeEvent.name}</h3>
+    <p>${activeEvent.kind} at ${activeEvent.venue}</p>
+    <div class="spotlight-stats">
+      <div><span>Status</span><strong>${activeEvent.status}</strong></div>
+      <div><span>Date</span><strong>${activeEvent.event_date}</strong></div>
+      <div><span>Goal</span><strong>${activeEvent.ticket_goal}</strong></div>
+      <div><span>Price</span><strong>${money(activeEvent.ticket_price)}</strong></div>
+    </div>
+    <div class="record-meta">${activeEvent.notes || "No run note logged yet."}</div>
+  `;
+
+  elements.guestMomentum.innerHTML = `
+    <div class="mini-metric"><span>Committed seats</span><strong>${committed}</strong></div>
+    <div class="mini-metric"><span>Maybe list</span><strong>${eventGuests.filter((guest) => guest.rsvp === "Maybe").length}</strong></div>
+    <div class="mini-metric"><span>Invited only</span><strong>${eventGuests.filter((guest) => guest.rsvp === "Invited").length}</strong></div>
+  `;
+
+  elements.vendorMomentum.innerHTML = `
+    <div class="mini-metric"><span>Booked partners</span><strong>${eventVendors.filter((vendor) => vendor.status === "Booked").length}</strong></div>
+    <div class="mini-metric"><span>Quoted</span><strong>${eventVendors.filter((vendor) => vendor.status === "Quoted").length}</strong></div>
+    <div class="mini-metric"><span>Open blockers</span><strong>${eventTasks.filter((item) => item.status !== "Done").length}</strong></div>
+  `;
+
+  elements.milestoneList.innerHTML = eventTasks.length
+    ? eventTasks
+        .slice()
+        .sort((a, b) => String(a.due_date || "").localeCompare(String(b.due_date || "")))
+        .map((item) => `<article class="timeline-card"><div><h4>${item.title}</h4><p>${item.owner || "Unassigned"} • ${item.due_date || "No due date"}</p></div><span class="${badgeClass(item.status)}">${item.status}</span></article>`)
+        .join("")
+    : `<div class="empty-state">No milestones logged for this event.</div>`;
+
+  elements.guestWatchList.innerHTML = eventGuests.length
+    ? eventGuests.slice(0, 6).map((guest) => `<article class="timeline-card"><div><h4>${guest.name}</h4><p>${guest.email || "No email"} • party of ${guest.party_size}</p></div><span class="${badgeClass(guest.rsvp)}">${guest.rsvp}</span></article>`).join("")
+    : `<div class="empty-state">No RSVP activity for this event yet.</div>`;
+}
+
 function renderGuests() {
   elements.guestList.innerHTML = "";
   if (!state.data.guests.length) {
@@ -173,6 +231,7 @@ function renderChecklist() {
 function render() {
   updateSelects();
   renderStats();
+  renderOverview();
   renderEvents();
   renderGuests();
   renderVendors();
