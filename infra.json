@@ -1,0 +1,11 @@
+{
+  "app_name": "EventPulse",
+  "slug": "eventpulse",
+  "folder": "/Volumes/My Passport for Mac/EventPulse",
+  "github_repository": "https://github.com/ronb12/eventpulse",
+  "vercel_project": "eventpulse",
+  "vercel_url": "https://eventpulse-p8lh7k7z7-ronell-bradleys-projects.vercel.app\",",
+  "neon_project_id": "late-brook-83094577",
+  "neon_database_name": "eventpulse",
+  "neon_console_url": "https://console.neon.tech/app/projects/late-brook-83094577"
+}
